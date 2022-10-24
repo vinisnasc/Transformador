@@ -6,7 +6,7 @@ using Transformador.Domain.Entities;
 
 namespace Transformador.Services
 {
-    public class BaseService
+    public abstract class BaseService
     {
         private readonly INotificador _notificador;
 
