@@ -5,6 +5,14 @@ VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transformador.API", "Transformador.API\Transformador.API.csproj", "{BCB29A1D-DAA1-4218-B547-483BBD21D340}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transformador.Data", "Transformador.Data\Transformador.Data.csproj", "{9C5CFA1C-B65D-4495-AFE5-BCC154F69450}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transformador.Domain", "Transformador.Domain\Transformador.Domain.csproj", "{2E21C980-6430-4583-88CC-CF52DCBFC3D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transformador.Services", "Transformador.Services\Transformador.Services.csproj", "{8F640B3B-4AF3-40AD-A545-EF32937538AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transformador.CrossCutting", "Transformador.CrossCutting\Transformador.CrossCutting.csproj", "{DD51EACA-59A9-4F6E-82AC-395A322A0863}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +23,22 @@ Global
 		{BCB29A1D-DAA1-4218-B547-483BBD21D340}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCB29A1D-DAA1-4218-B547-483BBD21D340}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCB29A1D-DAA1-4218-B547-483BBD21D340}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C5CFA1C-B65D-4495-AFE5-BCC154F69450}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C5CFA1C-B65D-4495-AFE5-BCC154F69450}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C5CFA1C-B65D-4495-AFE5-BCC154F69450}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C5CFA1C-B65D-4495-AFE5-BCC154F69450}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E21C980-6430-4583-88CC-CF52DCBFC3D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E21C980-6430-4583-88CC-CF52DCBFC3D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E21C980-6430-4583-88CC-CF52DCBFC3D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E21C980-6430-4583-88CC-CF52DCBFC3D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F640B3B-4AF3-40AD-A545-EF32937538AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F640B3B-4AF3-40AD-A545-EF32937538AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F640B3B-4AF3-40AD-A545-EF32937538AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F640B3B-4AF3-40AD-A545-EF32937538AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD51EACA-59A9-4F6E-82AC-395A322A0863}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD51EACA-59A9-4F6E-82AC-395A322A0863}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD51EACA-59A9-4F6E-82AC-395A322A0863}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD51EACA-59A9-4F6E-82AC-395A322A0863}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
