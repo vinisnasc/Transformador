@@ -22,6 +22,12 @@ namespace Transformador.Services
             _transformerRepository = transformerRepository;
         }
 
+        public IEnumerable<TestVM> BuscarTodos()
+        {
+            var entities = _repository.SelecionarTudo();
+            return _mapper.Map<IEnumerable<TestVM>>(entities);
+        }
+
         public async Task<TestVM> CriarAsync(TestDto dto)
         {
             if (await _transformerRepository.SelecionarPorId(dto.TransformerId) == null)

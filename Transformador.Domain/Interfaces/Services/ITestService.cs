@@ -6,5 +6,6 @@ namespace Transformador.Domain.Interfaces.Services
     public interface ITestService
     {
         Task<TestVM> CriarAsync(TestDto dto);
+        IEnumerable<TestVM> BuscarTodos();
     }
 }
