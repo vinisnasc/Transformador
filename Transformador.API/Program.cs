@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Options;
 using Transformador.CrossCutting;
+using Transformador.CrossCutting.Mapper;
 using Transformador.Data.MongoConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("Mo
 builder.Services.AddSingleton<IMongoDbSettings>(serviceProvider =>
     serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
 
+builder.Services.AddAutoMapperConfiguration();
 builder.Services.RegisterServices();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

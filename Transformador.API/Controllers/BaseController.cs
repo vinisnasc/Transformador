@@ -57,5 +57,20 @@ namespace Transformador.API.Controllers
         {
             _notificador.Handle(new Notificacao(mensagem));
         }
+
+        protected bool ValidarIdHexadecimal(string id)
+        {
+            bool isHex;
+            foreach (var c in id)
+            {
+                isHex = ((c >= '0' && c <= '9') ||
+                         (c >= 'a' && c <= 'f') ||
+                         (c >= 'A' && c <= 'F'));
+
+                if (!isHex)
+                    return false;
+            }
+            return true;
+        }
     }
 }
