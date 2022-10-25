@@ -14,9 +14,11 @@ namespace Transformador.CrossCutting
         {
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITransformerRepository, TransformerRepository>();
 
             services.AddScoped<INotificador, Notificador>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITransformerService, TransformerService>();
 
             return services;
         }
