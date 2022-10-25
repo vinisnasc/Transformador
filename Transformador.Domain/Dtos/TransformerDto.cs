@@ -1,9 +1,6 @@
-﻿using Transformador.Domain.Entities.MongoExtension;
-
-namespace Transformador.Domain.Entities
+﻿namespace Transformador.Domain.Dtos
 {
-    [BsonCollection("Transformers")]
-    public class Transformer : BaseEntity
+    public class TransformerDto
     {
         public string Name { get; set; }
         public int InternalNumber { get; set; }

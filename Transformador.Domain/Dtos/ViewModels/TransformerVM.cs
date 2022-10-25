@@ -1,10 +1,8 @@
-﻿using Transformador.Domain.Entities.MongoExtension;
-
-namespace Transformador.Domain.Entities
+﻿namespace Transformador.Domain.Dtos.ViewModels
 {
-    [BsonCollection("Transformers")]
-    public class Transformer : BaseEntity
+    public class TransformerVM
     {
+        public string Id { get; set; }
         public string Name { get; set; }
         public int InternalNumber { get; set; }
         public double TensionClass { get; set; }

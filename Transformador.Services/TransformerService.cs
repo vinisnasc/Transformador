@@ -1,18 +1,38 @@
 ﻿using AutoMapper;
+using Transformador.Domain.Dtos;
+using Transformador.Domain.Dtos.ViewModels;
+using Transformador.Domain.Entities;
 using Transformador.Domain.Interfaces.Data.Repository;
 using Transformador.Domain.Interfaces.Services;
+using Transformador.Domain.Validacoes;
 
 namespace Transformador.Services
 {
     public class TransformerService : BaseService, ITransformerService
     {
         private readonly ITransformerRepository _repository;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public TransformerService(ITransformerRepository repository, IMapper mapper, INotificador notificador) : base(notificador)
+        public TransformerService(ITransformerRepository repository, IMapper mapper, INotificador notificador, IUserRepository userRepository) : base(notificador)
         {
             _repository = repository;
             _mapper = mapper;
+            _userRepository = userRepository;
+        }
+
+        public async Task<TransformerVM> CriarAsync(TransformerDto dto)
+        {
+            if(await _userRepository.SelecionarPorId(dto.UserId) == null)
+            {
+                Notificar("Id de usuário não existe!");
+                return null;
+            }
+
+            var entity = _mapper.Map<Transformer>(dto);
+            if (!ExecutarValidacao(new TransformerValidation(), entity)) return null;
+            await _repository.Incluir(entity);
+            return _mapper.Map<TransformerVM>(entity);
         }
     }
 }
