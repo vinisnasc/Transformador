@@ -43,5 +43,14 @@ namespace Transformador.Services
             await _repository.Incluir(entity);
             return _mapper.Map<UserVM>(entity);
         }
+
+        public async Task<UserVM> AtualizarAsync(string id, UserDto user)
+        {
+            var entity = _mapper.Map<User>(user);
+            entity.Id = new MongoDB.Bson.ObjectId(id);
+            if (!ExecutarValidacao(new UserValidation(), entity)) return null;
+            await _repository.Alterar(entity);
+            return _mapper.Map<UserVM>(entity);
+        }
     }
 }

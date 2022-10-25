@@ -34,7 +34,9 @@ namespace Transformador.Data
 
         public async Task Alterar(T entity)
         {
+            entity.UpdatedAt = DateTime.Now;
             var filter = Builders<T>.Filter.Eq(doc => doc.Id, entity.Id);
+            entity.CreatedAt = entity.Id.CreationTime;
             await _dbCollection.FindOneAndReplaceAsync(filter, entity);
         }
 
@@ -45,6 +47,8 @@ namespace Transformador.Data
                 throw new ArgumentNullException(typeof(T).Name + " object is null");
             }
 
+            entity.CreatedAt = DateTime.Now;
+            entity.UpdatedAt = DateTime.Now;
             await _dbCollection.InsertOneAsync(entity);
         }
 

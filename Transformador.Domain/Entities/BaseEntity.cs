@@ -12,11 +12,5 @@ namespace Transformador.Domain.Entities
         public DateTime CreatedAt;
 
         public DateTime UpdatedAt;
-
-        protected BaseEntity()
-        {
-            CreatedAt = DateTime.Now;
-            UpdatedAt = DateTime.Now;
-        }
     }
 }

@@ -8,5 +8,6 @@ namespace Transformador.Domain.Interfaces.Services
         IEnumerable<UserVM> BuscarTodos();
         Task<UserVM> BuscarUsuarioasync(string id);
         Task<UserVM> CriarAsync(UserDto user);
+        Task<UserVM> AtualizarAsync(string id, UserDto user);
     }
 }

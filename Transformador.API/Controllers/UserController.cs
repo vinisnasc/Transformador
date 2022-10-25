@@ -45,5 +45,20 @@ namespace Transformador.API.Controllers
             var result = await _service.CriarAsync(dto);
             return CustomResponse(result);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> AtualizarUsuario(string id, UserDto dto)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+            
+            if (!ValidarIdHexadecimal(id))
+            {
+                NotificarErro("Id inválido!");
+                return CustomResponse();
+            }
+
+            var result = await _service.AtualizarAsync(id, dto);
+            return CustomResponse(result);
+        }
     }
 }
