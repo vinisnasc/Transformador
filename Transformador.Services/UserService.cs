@@ -11,12 +11,15 @@ namespace Transformador.Services
     public class UserService : BaseService, IUserService
     {
         private readonly IUserRepository _repository;
+        private readonly ITransformerRepository _transformerRepository;
         private readonly IMapper _mapper;
 
-        public UserService(IUserRepository repository, IMapper mapper, INotificador notificador) : base(notificador)
+        public UserService(IUserRepository repository, IMapper mapper, INotificador notificador,
+                           ITransformerRepository transformerRepository) : base(notificador)
         {
             _repository = repository;
             _mapper = mapper;
+            _transformerRepository = transformerRepository;
         }
 
         public IEnumerable<UserVM> BuscarTodos()
@@ -25,7 +28,7 @@ namespace Transformador.Services
             return _mapper.Map<IEnumerable<UserVM>>(entities);
         }
 
-        public async Task<UserVM> BuscarUsuarioasync(string id)
+        public async Task<UserVMComplete> BuscarUsuarioasync(string id)
         {
             var entity = await _repository.SelecionarPorId(id);
             if (entity == null)
@@ -33,7 +36,9 @@ namespace Transformador.Services
                 Notificar("Não foi encontrado um usuário com este id!");
                 return null;
             }
-            return _mapper.Map<UserVM>(entity);
+            var vm = _mapper.Map<UserVMComplete>(entity);
+            vm.Transformers = (_mapper.Map<IEnumerable<TransformerVM>>(_transformerRepository.Buscar(x => x.UserId == vm.Id))).ToList();
+            return vm;
         }
 
         public async Task<UserVM> CriarAsync(UserDto user)

@@ -1,4 +1,5 @@
-﻿using Transformador.Domain.Entities;
+﻿using System.Linq.Expressions;
+using Transformador.Domain.Entities;
 
 namespace Transformador.Domain.Interfaces.Data.Repository
 {
@@ -8,5 +9,6 @@ namespace Transformador.Domain.Interfaces.Data.Repository
         Task Alterar(T entity);
         Task<T> SelecionarPorId(string id);
         IQueryable<T> SelecionarTudo();
+        IEnumerable<T> Buscar(Expression<Func<T, bool>> predicate);
     }
 }

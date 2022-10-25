@@ -11,6 +11,7 @@ namespace Transformador.CrossCutting.Mapper
         {
             CreateMap<UserDto, User>();
             CreateMap<User, UserVM>().ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
+            CreateMap<User, UserVMComplete>().ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
 
             CreateMap<TransformerDto, Transformer>();
             CreateMap<Transformer, TransformerVM>().ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
