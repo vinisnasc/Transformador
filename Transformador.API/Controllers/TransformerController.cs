@@ -42,12 +42,31 @@ namespace Transformador.API.Controllers
         {
             if (!ValidarIdHexadecimal(dto.UserId))
             {
-                NotificarErro("Id de usuário não encontrado!");
+                NotificarErro("Id de usuário inválido!");
                 return CustomResponse();
             }
             if (!ModelState.IsValid) return CustomResponse(ModelState);
             var result = await _service.CriarAsync(dto);
             return CustomResponse(result);
+        }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> AtualizarTransformador(string id, TransformerDto dto)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            if (!ValidarIdHexadecimal(id) || !ValidarIdHexadecimal(dto.UserId))
+            {
+                NotificarErro("Id de transformador ou de usuário inválido!");
+                return CustomResponse();
+            }
+
+            var result = await _service.AtualizarAsync(id, dto);
+            return CustomResponse(result);
+
+            // TODO: atualização está vindo ok mesmo se nao encontrar o objeto
         }
     }
 }

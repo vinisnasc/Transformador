@@ -53,5 +53,14 @@ namespace Transformador.Services
             await _repository.Incluir(entity);
             return _mapper.Map<TransformerVM>(entity);
         }
+
+        public async Task<TransformerVM> AtualizarAsync(string id, TransformerDto dto)
+        {
+            var entity = _mapper.Map<Transformer>(dto);
+            entity.Id = new MongoDB.Bson.ObjectId(id);
+            if (!ExecutarValidacao(new TransformerValidation(), entity)) return null;
+            await _repository.Alterar(entity);
+            return _mapper.Map<TransformerVM>(entity);
+        }
     }
 }
