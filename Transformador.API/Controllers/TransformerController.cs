@@ -14,6 +14,27 @@ namespace Transformador.API.Controllers
             _service = service ?? throw new ArgumentNullException(nameof(service)); ;
         }
 
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult BuscarTodos()
+        {
+            return CustomResponse(_service.BuscarTodos());
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> BuscarTransformadorAsync(string id)
+        {
+            if (!ValidarIdHexadecimal(id))
+            {
+                NotificarErro("Id inválido!");
+                return CustomResponse();
+            }
+            var vm = await _service.BuscarTransformadorasync(id);
+            return CustomResponse(vm);
+        }
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

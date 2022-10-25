@@ -21,6 +21,25 @@ namespace Transformador.Services
             _userRepository = userRepository;
         }
 
+        public IEnumerable<TransformerVM> BuscarTodos()
+        {
+            var entities = _repository.SelecionarTudo();
+            return _mapper.Map<IEnumerable<TransformerVM>>(entities);
+        }
+
+        public async Task<TransformerVMComplete> BuscarTransformadorasync(string id)
+        {
+            var entity = await _repository.SelecionarPorId(id);
+            if (entity == null)
+            {
+                Notificar("Não foi encontrado um transformador com este id!");
+                return null;
+            }
+            var vm = _mapper.Map<TransformerVMComplete>(entity);
+            vm.User = _mapper.Map<UserVM>(await _userRepository.SelecionarPorId(entity.UserId));
+            return vm;
+        }
+
         public async Task<TransformerVM> CriarAsync(TransformerDto dto)
         {
             if(await _userRepository.SelecionarPorId(dto.UserId) == null)
