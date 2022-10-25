@@ -5,7 +5,6 @@ using Transformador.Domain.Interfaces.Services;
 namespace Transformador.API.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
     public class UserController : BaseController
     {
         private readonly IUserService _service;
