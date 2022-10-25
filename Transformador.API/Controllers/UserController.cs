@@ -19,7 +19,21 @@ namespace Transformador.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult BuscarTodos()
         {
-            return CustomResponse(_service.BuscarTodosAsync());
+            return CustomResponse(_service.BuscarTodos());
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> BuscarUsuarioAsync(string id)
+        {
+            if (!ValidarIdHexadecimal(id))
+            {
+                NotificarErro("Id inválido!");
+                return CustomResponse();
+            }
+            var vm = await _service.BuscarUsuarioasync(id);
+            return CustomResponse(vm);
         }
 
         [HttpPost]

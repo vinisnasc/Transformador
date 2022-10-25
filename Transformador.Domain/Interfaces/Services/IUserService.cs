@@ -5,7 +5,8 @@ namespace Transformador.Domain.Interfaces.Services
 {
     public interface IUserService
     {
+        IEnumerable<UserVM> BuscarTodos();
+        Task<UserVM> BuscarUsuarioasync(string id);
         Task<UserVM> CriarAsync(UserDto user);
-        IEnumerable<UserVM> BuscarTodosAsync();
     }
 }

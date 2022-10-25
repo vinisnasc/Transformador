@@ -19,10 +19,21 @@ namespace Transformador.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<UserVM> BuscarTodosAsync()
+        public IEnumerable<UserVM> BuscarTodos()
         {
             var entities = _repository.SelecionarTudo();
             return _mapper.Map<IEnumerable<UserVM>>(entities);
+        }
+
+        public async Task<UserVM> BuscarUsuarioasync(string id)
+        {
+            var entity = await _repository.SelecionarPorId(id);
+            if (entity == null)
+            {
+                Notificar("Não foi encontrado um usuário com este id!");
+                return null;
+            }
+            return _mapper.Map<UserVM>(entity);
         }
 
         public async Task<UserVM> CriarAsync(UserDto user)
