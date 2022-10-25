@@ -9,8 +9,14 @@ namespace Transformador.Domain.Entities
         [BsonRepresentation(BsonType.String)]
         public ObjectId Id { get; set; }
 
-        public DateTime CreatedAt => Id.CreationTime;
+        public DateTime CreatedAt;
 
-        public DateTime UpdatedAt => DateTime.Now;
+        public DateTime UpdatedAt;
+
+        protected BaseEntity()
+        {
+            CreatedAt = DateTime.Now;
+            UpdatedAt = DateTime.Now;
+        }
     }
 }
