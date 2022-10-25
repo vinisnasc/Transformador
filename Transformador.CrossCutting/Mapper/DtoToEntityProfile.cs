@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Transformador.Domain.Dtos;
+using Transformador.Domain.Dtos.ViewModels;
 using Transformador.Domain.Entities;
 
 namespace Transformador.CrossCutting.Mapper
@@ -9,7 +10,7 @@ namespace Transformador.CrossCutting.Mapper
         public DtoToEntityProfile()
         {
             CreateMap<UserDto, User>();
-            CreateMap<User, UserDto>().ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
+            CreateMap<User, UserVM>().ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
         }
     }
 }

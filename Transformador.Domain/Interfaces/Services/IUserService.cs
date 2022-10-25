@@ -1,10 +1,11 @@
 ﻿using Transformador.Domain.Dtos;
-using Transformador.Domain.Entities;
+using Transformador.Domain.Dtos.ViewModels;
 
 namespace Transformador.Domain.Interfaces.Services
 {
     public interface IUserService
     {
-        Task<UserDto> CriarAsync(UserDto user);
+        Task<UserVM> CriarAsync(UserDto user);
+        IEnumerable<UserVM> BuscarTodosAsync();
     }
 }

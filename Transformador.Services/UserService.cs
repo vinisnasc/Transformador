@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Transformador.Domain.Dtos;
+using Transformador.Domain.Dtos.ViewModels;
 using Transformador.Domain.Entities;
 using Transformador.Domain.Interfaces.Data.Repository;
 using Transformador.Domain.Interfaces.Services;
@@ -18,12 +19,18 @@ namespace Transformador.Services
             _mapper = mapper;
         }
 
-        public async Task<UserDto> CriarAsync(UserDto user)
+        public IEnumerable<UserVM> BuscarTodosAsync()
+        {
+            var entities = _repository.SelecionarTudo();
+            return _mapper.Map<IEnumerable<UserVM>>(entities);
+        }
+
+        public async Task<UserVM> CriarAsync(UserDto user)
         {
             var entity = _mapper.Map<User>(user);
             if (!ExecutarValidacao(new UserValidation(), entity)) return null;
             await _repository.Incluir(entity);
-            return _mapper.Map<UserDto>(entity);
+            return _mapper.Map<UserVM>(entity);
         }
     }
 }
