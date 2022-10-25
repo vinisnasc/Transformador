@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
+using System.Linq.Expressions;
 using Transformador.Data.MongoConfiguration;
 using Transformador.Domain.Entities;
 using Transformador.Domain.Entities.MongoExtension;
@@ -55,6 +56,11 @@ namespace Transformador.Data
         public IQueryable<T> SelecionarTudo()
         {
             return _dbCollection.AsQueryable();
+        }
+
+        public IEnumerable<T> Buscar(Expression<Func<T, bool>> predicate)
+        {
+            return _dbCollection.Find(predicate).ToEnumerable();
         }
     }
 }
