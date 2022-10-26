@@ -14,6 +14,10 @@ namespace Transformador.API.Controllers
             _service = service ?? throw new ArgumentNullException(nameof(service)); ;
         }
 
+        /// <summary>
+        /// Retorna todos testes do banco de dados, inclusive os inativos
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult BuscarTodos()
@@ -21,6 +25,22 @@ namespace Transformador.API.Controllers
             return CustomResponse(_service.BuscarTodos());
         }
 
+        /// <summary>
+        /// Retorna todos os testes que estão atualmente ativos no banco de dados
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("buscar-ativos")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult BuscarTodosAtivos()
+        {
+            return CustomResponse(_service.BuscarApenasAtivos());
+        }
+
+        /// <summary>
+        /// Retorna um teste de acordo com seu id, mostrando seus dados completos, inclusive relatorio, usuario e transformador
+        /// </summary>
+        /// <param name="id">id hexadecimal com 12 digitos</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -34,7 +54,12 @@ namespace Transformador.API.Controllers
             var vm = await _service.BuscarTestAsync(id);
             return CustomResponse(vm);
         }
-
+        
+        /// <summary>
+        /// Cria um novo teste
+        /// </summary>
+        /// <param name="dto">dados do teste a ser criado</param>
+        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -50,6 +75,12 @@ namespace Transformador.API.Controllers
             return CustomResponse(result);
         }
 
+        /// <summary>
+        /// Atualiza os dados do teste que está sendo passado conforme seu id
+        /// </summary>
+        /// <param name="id">id hexadecimal com 12 digitos</param>
+        /// <param name="dto">dados a serem sobrescritos</param>
+        /// <returns></returns>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -67,6 +98,11 @@ namespace Transformador.API.Controllers
             return CustomResponse(result);
         }
 
+        /// <summary>
+        /// Desativa o teste conforme seu id, desativa também os relatorios ligados a ele
+        /// </summary>
+        /// <param name="id">id hexadecimal com 12 digitos</param>
+        /// <returns></returns>
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
