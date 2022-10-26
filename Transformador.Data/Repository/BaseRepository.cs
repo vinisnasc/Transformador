@@ -58,9 +58,9 @@ namespace Transformador.Data
             return _dbCollection.AsQueryable();
         }
 
-        public IEnumerable<T> Buscar(Expression<Func<T, bool>> predicate)
+        public List<T> Buscar(Expression<Func<T, bool>> predicate)
         {
-            return _dbCollection.Find(predicate).ToEnumerable();
+            return _dbCollection.Find(predicate).ToList();
         }
     }
 }

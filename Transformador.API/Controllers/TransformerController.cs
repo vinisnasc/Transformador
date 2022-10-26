@@ -14,6 +14,10 @@ namespace Transformador.API.Controllers
             _service = service ?? throw new ArgumentNullException(nameof(service)); ;
         }
 
+        /// <summary>
+        /// Retorna todos os Transformadores cadastrados no banco de dados
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult BuscarTodos()
@@ -21,6 +25,11 @@ namespace Transformador.API.Controllers
             return CustomResponse(_service.BuscarTodos());
         }
 
+        /// <summary>
+        /// Retorna todas informações de um transformador, cujo o Id é informado
+        /// </summary>
+        /// <param name="id">id hexadecimal</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -31,10 +40,15 @@ namespace Transformador.API.Controllers
                 NotificarErro("Id inválido!");
                 return CustomResponse();
             }
-            var vm = await _service.BuscarTransformadorasync(id);
+            var vm = await _service.BuscarTransformadorAsync(id);
             return CustomResponse(vm);
         }
 
+        /// <summary>
+        /// Cadastra um novo transformador no banco de dados
+        /// </summary>
+        /// <param name="dto">dados do transformador a ser cadastrado</param>
+        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -50,6 +64,12 @@ namespace Transformador.API.Controllers
             return CustomResponse(result);
         }
 
+        /// <summary>
+        /// Atualiza as informações de um transformador, conforme o id informado
+        /// </summary>
+        /// <param name="id">id hexadecimal</param>
+        /// <param name="dto">dados atualizados</param>
+        /// <returns></returns>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

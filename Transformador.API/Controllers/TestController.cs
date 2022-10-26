@@ -39,7 +39,7 @@ namespace Transformador.API.Controllers
         /// <summary>
         /// Retorna um teste de acordo com seu id, mostrando seus dados completos, inclusive relatorio, usuario e transformador
         /// </summary>
-        /// <param name="id">id hexadecimal com 12 digitos</param>
+        /// <param name="id">id hexadecimal</param>
         /// <returns></returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -78,8 +78,8 @@ namespace Transformador.API.Controllers
         /// <summary>
         /// Atualiza os dados do teste que está sendo passado conforme seu id
         /// </summary>
-        /// <param name="id">id hexadecimal com 12 digitos</param>
-        /// <param name="dto">dados a serem sobrescritos</param>
+        /// <param name="id">id hexadecimal</param>
+        /// <param name="dto">dados atualizados</param>
         /// <returns></returns>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -101,7 +101,7 @@ namespace Transformador.API.Controllers
         /// <summary>
         /// Desativa o teste conforme seu id, desativa também os relatorios ligados a ele
         /// </summary>
-        /// <param name="id">id hexadecimal com 12 digitos</param>
+        /// <param name="id">id hexadecimal</param>
         /// <returns></returns>
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK)]

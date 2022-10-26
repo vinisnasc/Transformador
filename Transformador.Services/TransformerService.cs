@@ -13,15 +13,18 @@ namespace Transformador.Services
         private readonly ITransformerRepository _repository;
         private readonly IUserRepository _userRepository;
         private readonly ITestRepository _testRepository;
+        private readonly IReportRepository _reportRepository;
         private readonly IMapper _mapper;
 
-        public TransformerService(ITransformerRepository repository, IMapper mapper, INotificador notificador, 
-                                  IUserRepository userRepository, ITestRepository testRepository) : base(notificador)
+        public TransformerService(ITransformerRepository repository, IMapper mapper, INotificador notificador,
+                                  IUserRepository userRepository, ITestRepository testRepository, 
+                                  IReportRepository reportRepository) : base(notificador)
         {
             _repository = repository;
             _mapper = mapper;
             _userRepository = userRepository;
             _testRepository = testRepository;
+            _reportRepository = reportRepository;
         }
 
         public IEnumerable<TransformerVM> BuscarTodos()
@@ -30,7 +33,7 @@ namespace Transformador.Services
             return _mapper.Map<IEnumerable<TransformerVM>>(entities);
         }
 
-        public async Task<TransformerVMComplete> BuscarTransformadorasync(string id)
+        public async Task<TransformerVMComplete> BuscarTransformadorAsync(string id)
         {
             var entity = await _repository.SelecionarPorId(id);
             if (entity == null)
@@ -41,14 +44,21 @@ namespace Transformador.Services
             var vm = _mapper.Map<TransformerVMComplete>(entity);
             vm.User = _mapper.Map<UserVM>(await _userRepository.SelecionarPorId(entity.UserId));
 
-            vm.Testes = _mapper.Map<List<TestVMComplete>>(_testRepository.Buscar(x => x.TransformerId == id).ToList());
+            vm.Testes = _mapper.Map<List<TestVMComplete>>(_testRepository.Buscar(x => x.TransformerId == id && x.Status == true).ToList());
+
+            foreach (var item in vm.Testes)
+            {
+                var teste = _reportRepository.Buscar(x => x.TestId == item.Id && x.Status == true);
+                if (teste.FirstOrDefault() != null)
+                    item.Report = _mapper.Map<ReportVM>(teste.FirstOrDefault());
+            }
 
             return vm;
         }
 
         public async Task<TransformerVM> CriarAsync(TransformerDto dto)
         {
-            if(await _userRepository.SelecionarPorId(dto.UserId) == null)
+            if (await _userRepository.SelecionarPorId(dto.UserId) == null)
             {
                 Notificar("Id de usuário não existe!");
                 return null;

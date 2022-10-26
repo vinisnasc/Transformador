@@ -14,6 +14,10 @@ namespace Transformador.API.Controllers
             _service = service ?? throw new ArgumentNullException(nameof(service)); ;
         }
 
+        /// <summary>
+        /// Retorna todos os relatorios, inclusive os inativos
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult BuscarTodos()
@@ -21,6 +25,10 @@ namespace Transformador.API.Controllers
             return CustomResponse(_service.BuscarTodos());
         }
 
+        /// <summary>
+        /// Retorna todos os relatórios ativos do banco de dados
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("buscar-ativos")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult BuscarTodosAtivos()
@@ -28,6 +36,11 @@ namespace Transformador.API.Controllers
             return CustomResponse(_service.BuscarApenasAtivos());
         }
 
+        /// <summary>
+        /// Busca completa de um relatório, conforme Id informado
+        /// </summary>
+        /// <param name="id">id hexadecimal</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -42,6 +55,11 @@ namespace Transformador.API.Controllers
             return CustomResponse(vm);
         }
 
+        /// <summary>
+        /// Realiza um relatório com base em um teste que já existe
+        /// </summary>
+        /// <param name="dto">Dados do relatório a ser informados</param>
+        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -52,6 +70,12 @@ namespace Transformador.API.Controllers
             return CustomResponse(result);
         }
 
+        /// <summary>
+        /// Altera as propriedades de um relatório, conforme o id e os dados informados
+        /// </summary>
+        /// <param name="id">id hexadecimal</param>
+        /// <param name="dto">dados atualizados</param>
+        /// <returns></returns>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -69,6 +93,11 @@ namespace Transformador.API.Controllers
             return CustomResponse(result);
         }
 
+        /// <summary>
+        /// Desativa o relatório, não excluindo completamente to banco de dados
+        /// </summary>
+        /// <param name="id">id hexadecimal</param>
+        /// <returns></returns>
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
