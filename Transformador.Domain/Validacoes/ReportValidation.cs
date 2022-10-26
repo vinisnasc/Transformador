@@ -7,7 +7,17 @@ namespace Transformador.Domain.Validacoes
     {
         public ReportValidation()
         {
-            // TODO: regras de validaçoes de relatorio
+            RuleFor(f => f.Name)
+                .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido")
+                .Length(2, 100)
+                .WithMessage("O campo {PropertyName} precisa ter entre {MinLength} e {MaxLength} caracteres");
+
+            RuleFor(f => f.Status)
+                .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido");
+
+            RuleFor(f => f.TestId)
+                .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido")
+                .Length(12).WithMessage("O campo {PropertyName} está inválido!");
         }
     }
 }
