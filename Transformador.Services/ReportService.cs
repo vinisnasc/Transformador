@@ -70,6 +70,7 @@ namespace Transformador.Services
             }
 
             var entity = _mapper.Map<Report>(dto);
+            entity.Status = true;
             if (!ExecutarValidacao(new ReportValidation(), entity)) return null;
             await _repository.Incluir(entity);
             return _mapper.Map<ReportVM>(entity);
@@ -96,7 +97,8 @@ namespace Transformador.Services
             }
 
             var entity = _mapper.Map<Report>(dto);
-            entity.Id = new MongoDB.Bson.ObjectId(id);
+            entity.Id = original.Id;
+            entity.Status = original.Status;
             if (!ExecutarValidacao(new ReportValidation(), entity)) return null;
             await _repository.Alterar(entity);
             return _mapper.Map<ReportVM>(entity);

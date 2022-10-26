@@ -7,5 +7,6 @@
         public bool Status { get; set; }
         public int DurationInSeconds { get; set; }
         public TransformerVMComplete Transformer { get; set; }
+        public ReportVM? Report { get; set; }
     }
 }

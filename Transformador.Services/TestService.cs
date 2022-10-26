@@ -52,6 +52,7 @@ namespace Transformador.Services
 
             vm.Transformer = _mapper.Map<TransformerVMComplete>(transf);
             vm.Transformer.User = _mapper.Map<UserVM>(await _userRepository.SelecionarPorId(transf.UserId.ToString()));
+            vm.Report  = _mapper.Map<ReportVM>(_reportRepository.Buscar(x => x.TestId == id && x.Status == true).FirstOrDefault());
             return vm;
         }
 
