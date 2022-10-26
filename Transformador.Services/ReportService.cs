@@ -60,7 +60,7 @@ namespace Transformador.Services
 
         public async Task<ReportVM> CriarAsync(ReportDto dto)
         {
-            if (!await TestExiste(dto.TestId))
+            if (!TestExiste(dto.TestId))
                 return null;
 
             if (_repository.Buscar(x => x.TestId == dto.TestId && x.Status == true).Count() != 0)
@@ -70,6 +70,7 @@ namespace Transformador.Services
             }
 
             var entity = _mapper.Map<Report>(dto);
+            entity.Status = true;
             if (!ExecutarValidacao(new ReportValidation(), entity)) return null;
             await _repository.Incluir(entity);
             return _mapper.Map<ReportVM>(entity);
@@ -85,7 +86,7 @@ namespace Transformador.Services
                 return null;
             }
 
-            if (!await TestExiste(dto.TestId))
+            if (!TestExiste(dto.TestId))
                 return null;
 
             if(_repository.Buscar(x => x.TestId == dto.TestId && x.Status == true).Count() > 0 && 
@@ -96,7 +97,8 @@ namespace Transformador.Services
             }
 
             var entity = _mapper.Map<Report>(dto);
-            entity.Id = new MongoDB.Bson.ObjectId(id);
+            entity.Id = original.Id;
+            entity.Status = original.Status;
             if (!ExecutarValidacao(new ReportValidation(), entity)) return null;
             await _repository.Alterar(entity);
             return _mapper.Map<ReportVM>(entity);
@@ -110,11 +112,11 @@ namespace Transformador.Services
             return _mapper.Map<ReportVM>(entity);
         }
 
-        private async Task<bool> TestExiste(string id)
+        private bool TestExiste(string id)
         {
-            if (await _testRepository.SelecionarPorId(id) == null)
+            if (_testRepository.Buscar(x => x.Id.Equals(id) && x.Status == true).Count() == 0)
             {
-                Notificar("Id de Teste não existe!");
+                Notificar("Id de Teste não existe ou está desativado!");
                 return false;
             }
 
