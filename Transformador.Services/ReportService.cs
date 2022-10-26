@@ -22,12 +22,18 @@ namespace Transformador.Services
             _testRepository = testRepository;
         }
 
+        public IEnumerable<ReportVM> BuscarTodos()
+        {
+            var entities = _repository.SelecionarTudo();
+            return _mapper.Map<IEnumerable<ReportVM>>(entities);
+        }
+
         public async Task<ReportVM> CriarAsync(ReportDto dto)
         {
             if (!await TestExiste(dto.TestId))
                 return null;
 
-            if(_repository.Buscar(x => x.TestId == dto.TestId) != null)
+            if (_repository.Buscar(x => x.TestId == dto.TestId).Count() != 0)
             {
                 Notificar("Já existe um relatório para o teste informado!");
                 return null;

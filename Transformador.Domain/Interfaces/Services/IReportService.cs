@@ -5,6 +5,7 @@ namespace Transformador.Domain.Interfaces.Services
 {
     public interface IReportService
     {
+        IEnumerable<ReportVM> BuscarTodos();
         Task<ReportVM> CriarAsync(ReportDto dto);
     }
 }

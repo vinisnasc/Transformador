@@ -14,6 +14,13 @@ namespace Transformador.API.Controllers
             _service = service ?? throw new ArgumentNullException(nameof(service)); ;
         }
 
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult BuscarTodos()
+        {
+            return CustomResponse(_service.BuscarTodos());
+        }
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
