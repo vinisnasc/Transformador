@@ -9,5 +9,6 @@ namespace Transformador.Domain.Interfaces.Services
         Task<ReportVMComplete> BuscarReportAsync(string id);
         Task<ReportVM> CriarAsync(ReportDto dto);
         Task<ReportVM> AtualizarAsync(string id, ReportDto dto);
+        Task<ReportVM> DesativarReport(string id);
     }
 }

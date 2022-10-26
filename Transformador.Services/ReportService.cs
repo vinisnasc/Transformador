@@ -95,6 +95,14 @@ namespace Transformador.Services
             return _mapper.Map<ReportVM>(entity);
         }
 
+        public async Task<ReportVM> DesativarReport(string id)
+        {
+            var entity = await _repository.SelecionarPorId(id);
+            entity.Status = false;
+            await _repository.Alterar(entity);
+            return _mapper.Map<ReportVM>(entity);
+        }
+
         private async Task<bool> TestExiste(string id)
         {
             if (await _testRepository.SelecionarPorId(id) == null)

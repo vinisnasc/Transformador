@@ -52,16 +52,29 @@ namespace Transformador.API.Controllers
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            if (!ValidarIdHexadecimal(id))
+            if (!ValidarIdHexadecimal(id) || !ValidarIdHexadecimal(dto.TestId))
             {
-                NotificarErro("Id de relatório inválido!");
+                NotificarErro("Id de relatório ou de teste inválido!");
                 return CustomResponse();
             }
 
             var result = await _service.AtualizarAsync(id, dto);
             return CustomResponse(result);
+        }
 
-            // TODO: atualização está vindo ok mesmo se nao encontrar o objeto
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DesativarReport(string id)
+        {
+            if (!ValidarIdHexadecimal(id))
+            {
+                NotificarErro("Id de relatório ou de teste inválido!");
+                return CustomResponse();
+            }
+
+            var result = await _service.DesativarReport(id);
+            return CustomResponse(result);
         }
     }
 }
