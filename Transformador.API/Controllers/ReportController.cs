@@ -21,6 +21,13 @@ namespace Transformador.API.Controllers
             return CustomResponse(_service.BuscarTodos());
         }
 
+        [HttpGet("buscar-ativos")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult BuscarTodosAtivos()
+        {
+            return CustomResponse(_service.BuscarApenasAtivos());
+        }
+
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

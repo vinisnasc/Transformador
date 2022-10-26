@@ -33,6 +33,12 @@ namespace Transformador.Services
             return _mapper.Map<IEnumerable<ReportVM>>(entities);
         }
 
+        public IEnumerable<ReportVM> BuscarApenasAtivos()
+        {
+            var entities = _repository.Buscar(x => x.Status == true);
+            return _mapper.Map<IEnumerable<ReportVM>>(entities);
+        }
+
         public async Task<ReportVMComplete> BuscarReportAsync(string id)
         {
             var entity = await _repository.SelecionarPorId(id);
