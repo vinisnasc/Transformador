@@ -12,13 +12,16 @@ namespace Transformador.Services
     {
         private readonly ITransformerRepository _repository;
         private readonly IUserRepository _userRepository;
+        private readonly ITestRepository _testRepository;
         private readonly IMapper _mapper;
 
-        public TransformerService(ITransformerRepository repository, IMapper mapper, INotificador notificador, IUserRepository userRepository) : base(notificador)
+        public TransformerService(ITransformerRepository repository, IMapper mapper, INotificador notificador, 
+                                  IUserRepository userRepository, ITestRepository testRepository) : base(notificador)
         {
             _repository = repository;
             _mapper = mapper;
             _userRepository = userRepository;
+            _testRepository = testRepository;
         }
 
         public IEnumerable<TransformerVM> BuscarTodos()
@@ -37,6 +40,9 @@ namespace Transformador.Services
             }
             var vm = _mapper.Map<TransformerVMComplete>(entity);
             vm.User = _mapper.Map<UserVM>(await _userRepository.SelecionarPorId(entity.UserId));
+
+            vm.Testes = _mapper.Map<List<TestVMComplete>>(_testRepository.Buscar(x => x.TransformerId == id).ToList());
+
             return vm;
         }
 

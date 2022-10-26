@@ -9,5 +9,6 @@
         public double Potency { get; set; }
         public double Current { get; set; }
         public UserVM User { get; set; }
+        public List<TestVMComplete> Testes { get; set; }
     }
 }
