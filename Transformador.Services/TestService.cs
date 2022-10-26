@@ -49,16 +49,42 @@ namespace Transformador.Services
 
         public async Task<TestVM> CriarAsync(TestDto dto)
         {
-            if (await _transformerRepository.SelecionarPorId(dto.TransformerId) == null)
-            {
-                Notificar("Id de Transformador não existe!");
+            if (await TransformadorExiste(dto.TransformerId))
                 return null;
-            }
 
             var entity = _mapper.Map<Test>(dto);
             if (!ExecutarValidacao(new TestValidation(), entity)) return null;
             await _repository.Incluir(entity);
             return _mapper.Map<TestVM>(entity);
+        }
+
+        public async Task<TestVM> AtualizarAsync(string id, TestDto dto)
+        {
+            if (await BuscarTestAsync(id) == null)
+            {
+                Notificar("Id inválido!");
+                return null;
+            }
+
+            if (await TransformadorExiste(dto.TransformerId))
+                return null;
+
+            var entity = _mapper.Map<Test>(dto);
+            entity.Id = new MongoDB.Bson.ObjectId(id);
+            if (!ExecutarValidacao(new TestValidation(), entity)) return null;
+            await _repository.Alterar(entity);
+            return _mapper.Map<TestVM>(entity);
+        }
+
+        private async Task<bool> TransformadorExiste(string id)
+        {
+            if (await _transformerRepository.SelecionarPorId(id) == null)
+            {
+                Notificar("Id de Transformador não existe!");
+                return false;
+            }
+
+            return true;
         }
     }
 }
