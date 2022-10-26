@@ -40,11 +40,6 @@ namespace Transformador.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CriarReport(ReportDto dto)
         {
-            if (!ValidarIdHexadecimal(dto.TestId))
-            {
-                NotificarErro("Id de teste inválido!");
-                return CustomResponse();
-            }
             if (!ModelState.IsValid) return CustomResponse(ModelState);
             var result = await _service.CriarAsync(dto);
             return CustomResponse(result);
