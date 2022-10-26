@@ -49,7 +49,7 @@ namespace Transformador.Services
 
         public async Task<TestVM> CriarAsync(TestDto dto)
         {
-            if (await TransformadorExiste(dto.TransformerId))
+            if (!await TransformadorExiste(dto.TransformerId))
                 return null;
 
             var entity = _mapper.Map<Test>(dto);

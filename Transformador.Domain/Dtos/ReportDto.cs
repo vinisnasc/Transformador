@@ -2,11 +2,10 @@
 
 namespace Transformador.Domain.Dtos
 {
-    public class TestDto
+    public class ReportDto
     {
         public string Name { get; set; }
         public bool Status { get; set; }
-        public int DurationInSeconds { get; set; }
-        public string TransformerId { get; set; }
+        public string TestId { get; set; }
     }
 }

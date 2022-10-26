@@ -1,4 +1,6 @@
-﻿namespace Transformador.Domain.Dtos
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Transformador.Domain.Dtos
 {
     public class TransformerDto
     {
