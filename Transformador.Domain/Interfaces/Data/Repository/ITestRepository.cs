@@ -2,7 +2,7 @@
 
 namespace Transformador.Domain.Interfaces.Data.Repository
 {
-    public interface ITransformerRepository : IBaseRepository<Transformer>
+    public interface ITestRepository : IBaseRepository<Test>
     {
     }
 }

@@ -61,6 +61,8 @@ namespace Transformador.Services
             if (!ExecutarValidacao(new TransformerValidation(), entity)) return null;
             await _repository.Alterar(entity);
             return _mapper.Map<TransformerVM>(entity);
+
+            // TODO: Precisa validar o id ddo user que esta sendo passado
         }
     }
 }
