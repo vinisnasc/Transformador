@@ -13,15 +13,17 @@ namespace Transformador.Services
         private readonly ITestRepository _repository;
         private readonly ITransformerRepository _transformerRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IReportRepository _reportRepository;
         private readonly IMapper _mapper;
 
         public TestService(ITestRepository repository, IMapper mapper, INotificador notificador,
-                           ITransformerRepository transformerRepository, IUserRepository userRepository) : base(notificador)
+                           ITransformerRepository transformerRepository, IUserRepository userRepository, IReportRepository reportRepository) : base(notificador)
         {
             _repository = repository;
             _mapper = mapper;
             _transformerRepository = transformerRepository;
             _userRepository = userRepository;
+            _reportRepository = reportRepository;
         }
 
         public IEnumerable<TestVM> BuscarTodos()
@@ -60,19 +62,40 @@ namespace Transformador.Services
 
         public async Task<TestVM> AtualizarAsync(string id, TestDto dto)
         {
-            if (await BuscarTestAsync(id) == null)
+            var entity = await _repository.SelecionarPorId(id);
+            if (entity == null)
             {
-                Notificar("Id inválido!");
+                Notificar("Não foi encontrado um teste com este id!");
                 return null;
             }
 
-            if (await TransformadorExiste(dto.TransformerId))
+            if (!await TransformadorExiste(dto.TransformerId))
                 return null;
 
-            var entity = _mapper.Map<Test>(dto);
-            entity.Id = new MongoDB.Bson.ObjectId(id);
-            if (!ExecutarValidacao(new TestValidation(), entity)) return null;
+            var novo = _mapper.Map<Test>(dto);
+            novo.Id = new MongoDB.Bson.ObjectId(id);
+            if (!ExecutarValidacao(new TestValidation(), novo)) return null;
+            await _repository.Alterar(novo);
+            return _mapper.Map<TestVM>(novo);
+        }
+
+        public async Task<TestVM> DesativarTest(string id)
+        {
+            var entity = await _repository.SelecionarPorId(id);
+            entity.Status = false;
             await _repository.Alterar(entity);
+
+            var relatorios = _reportRepository.Buscar(x => x.TestId == id);
+
+            foreach (var relatorio in relatorios)
+            {
+                if (relatorio.Status)
+                {
+                    relatorio.Status = false;
+                    await _reportRepository.Alterar(relatorio);
+                }
+            }
+
             return _mapper.Map<TestVM>(entity);
         }
 

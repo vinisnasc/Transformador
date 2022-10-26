@@ -9,5 +9,6 @@ namespace Transformador.Domain.Interfaces.Services
         IEnumerable<TestVM> BuscarTodos();
         Task<TestVMComplete> BuscarTestAsync(string id);
         Task<TestVM> AtualizarAsync(string id, TestDto dto);
+        Task<TestVM> DesativarTest(string id);
     }
 }
