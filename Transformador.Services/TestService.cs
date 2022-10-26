@@ -61,6 +61,7 @@ namespace Transformador.Services
                 return null;
 
             var entity = _mapper.Map<Test>(dto);
+            entity.Status = true;
             if (!ExecutarValidacao(new TestValidation(), entity)) return null;
             await _repository.Incluir(entity);
             return _mapper.Map<TestVM>(entity);
@@ -79,7 +80,8 @@ namespace Transformador.Services
                 return null;
 
             var novo = _mapper.Map<Test>(dto);
-            novo.Id = new MongoDB.Bson.ObjectId(id);
+            novo.Status = entity.Status;
+            novo.Id = entity.Id;
             if (!ExecutarValidacao(new TestValidation(), novo)) return null;
             await _repository.Alterar(novo);
             return _mapper.Map<TestVM>(novo);
