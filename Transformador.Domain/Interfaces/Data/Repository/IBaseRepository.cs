@@ -9,6 +9,6 @@ namespace Transformador.Domain.Interfaces.Data.Repository
         Task Alterar(T entity);
         Task<T> SelecionarPorId(string id);
         IQueryable<T> SelecionarTudo();
-        IEnumerable<T> Buscar(Expression<Func<T, bool>> predicate);
+        List<T> Buscar(Expression<Func<T, bool>> predicate);
     }
 }
