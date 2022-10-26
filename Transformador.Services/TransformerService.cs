@@ -12,13 +12,16 @@ namespace Transformador.Services
     {
         private readonly ITransformerRepository _repository;
         private readonly IUserRepository _userRepository;
+        private readonly ITestRepository _testRepository;
         private readonly IMapper _mapper;
 
-        public TransformerService(ITransformerRepository repository, IMapper mapper, INotificador notificador, IUserRepository userRepository) : base(notificador)
+        public TransformerService(ITransformerRepository repository, IMapper mapper, INotificador notificador, 
+                                  IUserRepository userRepository, ITestRepository testRepository) : base(notificador)
         {
             _repository = repository;
             _mapper = mapper;
             _userRepository = userRepository;
+            _testRepository = testRepository;
         }
 
         public IEnumerable<TransformerVM> BuscarTodos()
@@ -37,6 +40,9 @@ namespace Transformador.Services
             }
             var vm = _mapper.Map<TransformerVMComplete>(entity);
             vm.User = _mapper.Map<UserVM>(await _userRepository.SelecionarPorId(entity.UserId));
+
+            vm.Testes = _mapper.Map<List<TestVMComplete>>(_testRepository.Buscar(x => x.TransformerId == id).ToList());
+
             return vm;
         }
 
@@ -56,13 +62,32 @@ namespace Transformador.Services
 
         public async Task<TransformerVM> AtualizarAsync(string id, TransformerDto dto)
         {
+            var original = await _repository.SelecionarPorId(id);
+            if (original == null)
+            {
+                Notificar("Id inválido!");
+                return null;
+            }
+
+            if (!await UserExiste(dto.UserId))
+                return null;
+
             var entity = _mapper.Map<Transformer>(dto);
             entity.Id = new MongoDB.Bson.ObjectId(id);
             if (!ExecutarValidacao(new TransformerValidation(), entity)) return null;
             await _repository.Alterar(entity);
             return _mapper.Map<TransformerVM>(entity);
+        }
 
-            // TODO: Precisa validar o id ddo user que esta sendo passado
+        private async Task<bool> UserExiste(string id)
+        {
+            if (await _userRepository.SelecionarPorId(id) == null)
+            {
+                Notificar("Id de Usuario não existe!");
+                return false;
+            }
+
+            return true;
         }
     }
 }

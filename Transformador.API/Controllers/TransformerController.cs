@@ -65,8 +65,6 @@ namespace Transformador.API.Controllers
 
             var result = await _service.AtualizarAsync(id, dto);
             return CustomResponse(result);
-
-            // TODO: atualização está vindo ok mesmo se nao encontrar o objeto
         }
     }
 }
