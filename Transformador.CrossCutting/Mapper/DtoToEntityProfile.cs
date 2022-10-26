@@ -23,7 +23,7 @@ namespace Transformador.CrossCutting.Mapper
 
             CreateMap<ReportDto, Report>();
             CreateMap<Report, ReportVM>().ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
-            //CreateMap<Report, ReportVMComplete>().ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
+            CreateMap<Report, ReportVMComplete>().ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
         }
     }
 }

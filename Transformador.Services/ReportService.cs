@@ -12,20 +12,44 @@ namespace Transformador.Services
     {
         private readonly IReportRepository _repository;
         private readonly ITestRepository _testRepository;
+        private readonly ITransformerRepository _transformerRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
         public ReportService(IReportRepository repository, IMapper mapper, INotificador notificador,
-                             ITestRepository testRepository) : base(notificador)
+                             ITestRepository testRepository, ITransformerRepository transformerRepository,
+                             IUserRepository userRepository) : base(notificador)
         {
             _repository = repository;
             _mapper = mapper;
             _testRepository = testRepository;
+            _transformerRepository = transformerRepository;
+            _userRepository = userRepository;
         }
 
         public IEnumerable<ReportVM> BuscarTodos()
         {
             var entities = _repository.SelecionarTudo();
             return _mapper.Map<IEnumerable<ReportVM>>(entities);
+        }
+
+        public async Task<ReportVMComplete> BuscarReportAsync(string id)
+        {
+            var entity = await _repository.SelecionarPorId(id);
+            if (entity == null)
+            {
+                Notificar("Não foi encontrado um relatorio com este id!");
+                return null;
+            }
+            var vm = _mapper.Map<ReportVMComplete>(entity);
+
+            var teste = await _testRepository.SelecionarPorId(entity.TestId);
+            vm.Test = _mapper.Map<TestVMComplete>(teste);
+
+            var transformer = await _transformerRepository.SelecionarPorId(teste.TransformerId);
+            vm.Test.Transformer = _mapper.Map<TransformerVMComplete>(transformer);
+            vm.Test.Transformer.User = _mapper.Map<UserVM>(await _userRepository.SelecionarPorId(transformer.UserId.ToString()));
+            return vm;
         }
 
         public async Task<ReportVM> CriarAsync(ReportDto dto)
