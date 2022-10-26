@@ -56,13 +56,32 @@ namespace Transformador.Services
 
         public async Task<TransformerVM> AtualizarAsync(string id, TransformerDto dto)
         {
+            var original = await _repository.SelecionarPorId(id);
+            if (original == null)
+            {
+                Notificar("Id inválido!");
+                return null;
+            }
+
+            if (!await UserExiste(dto.UserId))
+                return null;
+
             var entity = _mapper.Map<Transformer>(dto);
             entity.Id = new MongoDB.Bson.ObjectId(id);
             if (!ExecutarValidacao(new TransformerValidation(), entity)) return null;
             await _repository.Alterar(entity);
             return _mapper.Map<TransformerVM>(entity);
+        }
 
-            // TODO: Precisa validar o id ddo user que esta sendo passado
+        private async Task<bool> UserExiste(string id)
+        {
+            if (await _userRepository.SelecionarPorId(id) == null)
+            {
+                Notificar("Id de Usuario não existe!");
+                return false;
+            }
+
+            return true;
         }
     }
 }
