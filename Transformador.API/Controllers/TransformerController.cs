@@ -31,7 +31,7 @@ namespace Transformador.API.Controllers
                 NotificarErro("Id inválido!");
                 return CustomResponse();
             }
-            var vm = await _service.BuscarTransformadorasync(id);
+            var vm = await _service.BuscarTransformadorAsync(id);
             return CustomResponse(vm);
         }
 

@@ -12,14 +12,18 @@ namespace Transformador.Services
     {
         private readonly IUserRepository _repository;
         private readonly ITransformerRepository _transformerRepository;
+        private readonly ITestRepository _testRepository;
+        private readonly IReportRepository _reportRepository;
         private readonly IMapper _mapper;
 
         public UserService(IUserRepository repository, IMapper mapper, INotificador notificador,
-                           ITransformerRepository transformerRepository) : base(notificador)
+                           ITransformerRepository transformerRepository, ITestRepository testRepository, IReportRepository reportRepository) : base(notificador)
         {
             _repository = repository;
             _mapper = mapper;
             _transformerRepository = transformerRepository;
+            _testRepository = testRepository;
+            _reportRepository = reportRepository;
         }
 
         public IEnumerable<UserVM> BuscarTodos()
@@ -37,7 +41,21 @@ namespace Transformador.Services
                 return null;
             }
             var vm = _mapper.Map<UserVMComplete>(entity);
-            vm.Transformers = (_mapper.Map<IEnumerable<TransformerVM>>(_transformerRepository.Buscar(x => x.UserId == vm.Id))).ToList();
+
+            var transf = _transformerRepository.Buscar(x => x.UserId == vm.Id);
+            vm.Transformers = (_mapper.Map<IEnumerable<TransformerVMComplete>>(_transformerRepository.Buscar(x => x.UserId == vm.Id))).ToList();
+
+            foreach(var transformador in vm.Transformers)
+            {
+                var testes = _testRepository.Buscar(x => x.Status == true && x.TransformerId == transformador.Id);
+                transformador.Testes = _mapper.Map<List<TestVMComplete>>(testes);
+
+                foreach (var teste in transformador.Testes)
+                {
+                    var relatorios = _reportRepository.Buscar(x => x.Status == true && x.TestId.Equals(teste.Id));
+                    teste.Report = _mapper.Map<ReportVM>(relatorios.FirstOrDefault());
+                }
+            }
             return vm;
         }
 

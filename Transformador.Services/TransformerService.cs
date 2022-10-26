@@ -33,7 +33,7 @@ namespace Transformador.Services
             return _mapper.Map<IEnumerable<TransformerVM>>(entities);
         }
 
-        public async Task<TransformerVMComplete> BuscarTransformadorasync(string id)
+        public async Task<TransformerVMComplete> BuscarTransformadorAsync(string id)
         {
             var entity = await _repository.SelecionarPorId(id);
             if (entity == null)

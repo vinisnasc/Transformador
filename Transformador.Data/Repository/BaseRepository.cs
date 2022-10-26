@@ -60,7 +60,6 @@ namespace Transformador.Data
 
         public List<T> Buscar(Expression<Func<T, bool>> predicate)
         {
-            var teste = _dbCollection.Find(predicate).ToList();
             return _dbCollection.Find(predicate).ToList();
         }
     }
