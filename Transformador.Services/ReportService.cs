@@ -57,7 +57,7 @@ namespace Transformador.Services
             if (!await TestExiste(dto.TestId))
                 return null;
 
-            if (_repository.Buscar(x => x.TestId == dto.TestId).Count() != 0)
+            if (_repository.Buscar(x => x.TestId == dto.TestId && x.Status == true).Count() != 0)
             {
                 Notificar("Já existe um relatório para o teste informado!");
                 return null;
@@ -82,7 +82,8 @@ namespace Transformador.Services
             if (!await TestExiste(dto.TestId))
                 return null;
 
-            if(_repository.Buscar(x => x.TestId == dto.TestId).Count() > 0 && _repository.Buscar(x => x.TestId == dto.TestId).Any(x => x == original))
+            if(_repository.Buscar(x => x.TestId == dto.TestId && x.Status == true).Count() > 0 && 
+               _repository.Buscar(x => x.TestId == dto.TestId && x.Status == true).Any(x => x == original))
             {
                 Notificar("Já existe um relatório para o teste informado!");
                 return null;

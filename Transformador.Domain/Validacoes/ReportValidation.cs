@@ -14,10 +14,6 @@ namespace Transformador.Domain.Validacoes
 
             RuleFor(f => f.Status)
                 .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido");
-
-            RuleFor(f => f.TestId)
-                .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido")
-                .Length(12).WithMessage("O campo {PropertyName} está inválido!");
         }
     }
 }
