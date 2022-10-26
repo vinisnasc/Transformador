@@ -8,5 +8,6 @@ namespace Transformador.Domain.Interfaces.Services
         IEnumerable<ReportVM> BuscarTodos();
         Task<ReportVMComplete> BuscarReportAsync(string id);
         Task<ReportVM> CriarAsync(ReportDto dto);
+        Task<ReportVM> AtualizarAsync(string id, ReportDto dto);
     }
 }

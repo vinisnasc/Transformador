@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Transformador.CrossCutting;
 using Transformador.CrossCutting.Mapper;
@@ -9,6 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDbSettings"));
 builder.Services.AddSingleton<IMongoDbSettings>(serviceProvider =>
     serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
+
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 
 builder.Services.AddAutoMapperConfiguration();
 builder.Services.RegisterServices();

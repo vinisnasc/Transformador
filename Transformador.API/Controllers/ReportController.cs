@@ -44,5 +44,24 @@ namespace Transformador.API.Controllers
             var result = await _service.CriarAsync(dto);
             return CustomResponse(result);
         }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> AtualizarReport(string id, ReportDto dto)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            if (!ValidarIdHexadecimal(id))
+            {
+                NotificarErro("Id de relatório inválido!");
+                return CustomResponse();
+            }
+
+            var result = await _service.AtualizarAsync(id, dto);
+            return CustomResponse(result);
+
+            // TODO: atualização está vindo ok mesmo se nao encontrar o objeto
+        }
     }
 }

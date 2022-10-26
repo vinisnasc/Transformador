@@ -69,6 +69,32 @@ namespace Transformador.Services
             return _mapper.Map<ReportVM>(entity);
         }
 
+        public async Task<ReportVM> AtualizarAsync(string id, ReportDto dto)
+        {
+            var original = await _repository.SelecionarPorId(id);
+
+            if (original == null)
+            {
+                Notificar("Id inválido!");
+                return null;
+            }
+
+            if (!await TestExiste(dto.TestId))
+                return null;
+
+            if(_repository.Buscar(x => x.TestId == dto.TestId).Count() > 0 && _repository.Buscar(x => x.TestId == dto.TestId).Any(x => x == original))
+            {
+                Notificar("Já existe um relatório para o teste informado!");
+                return null;
+            }
+
+            var entity = _mapper.Map<Report>(dto);
+            entity.Id = new MongoDB.Bson.ObjectId(id);
+            if (!ExecutarValidacao(new ReportValidation(), entity)) return null;
+            await _repository.Alterar(entity);
+            return _mapper.Map<ReportVM>(entity);
+        }
+
         private async Task<bool> TestExiste(string id)
         {
             if (await _testRepository.SelecionarPorId(id) == null)
