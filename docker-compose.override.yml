@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  transformadorDB:
+    container_name: transformadorDB
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+      
+  transformador-api:
+    build: .
+    container_name: transformador-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    depends_on:
+      - transformadorDB
+    ports:
+      - "8002:80"
