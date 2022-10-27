@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  transformadorDB:
+    image: mongo
+
+  transformador-api:
+    image: ${DOCKER_REGISTRY-}transformadorapi
+    build:
+      context: .
+      dockerfile: Transformador.API/Dockerfile
+
+volumes:
+  mongo_data:

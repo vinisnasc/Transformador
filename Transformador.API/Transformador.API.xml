@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Transformador.API</name>
+    </assembly>
+    <members>
+        <member name="M:Transformador.API.Controllers.ReportController.BuscarTodos">
+            <summary>
+            Retorna todos os relatorios, inclusive os inativos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Transformador.API.Controllers.ReportController.BuscarTodosAtivos">
+            <summary>
+            Retorna todos os relatórios ativos do banco de dados
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Transformador.API.Controllers.ReportController.BuscarReportPorId(System.String)">
+            <summary>
+            Busca completa de um relatório, conforme Id informado
+            </summary>
+            <param name="id">id hexadecimal</param>
+            <returns></returns>
+        </member>
+        <member name="M:Transformador.API.Controllers.ReportController.CriarReport(Transformador.Domain.Dtos.ReportDto)">
+            <summary>
+            Realiza um relatório com base em um teste que já existe
+            </summary>
+            <param name="dto">Dados do relatório a ser informados</param>
+            <returns></returns>
+        </member>
+        <member name="M:Transformador.API.Controllers.ReportController.AtualizarReport(System.String,Transformador.Domain.Dtos.ReportDto)">
+            <summary>
+            Altera as propriedades de um relatório, conforme o id e os dados informados
+            </summary>
+            <param name="id">id hexadecimal</param>
+            <param name="dto">dados atualizados</param>
+            <returns></returns>
+        </member>
+        <member name="M:Transformador.API.Controllers.ReportController.DesativarReport(System.String)">
+            <summary>
+            Desativa o relatório, não excluindo completamente to banco de dados
+            </summary>
+            <param name="id">id hexadecimal</param>
+            <returns></returns>
+        </member>
+        <member name="M:Transformador.API.Controllers.TestController.BuscarTodos">
+            <summary>
+            Retorna todos testes do banco de dados, inclusive os inativos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Transformador.API.Controllers.TestController.BuscarTodosAtivos">
+            <summary>
+            Retorna todos os testes que estão atualmente ativos no banco de dados
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Transformador.API.Controllers.TestController.BuscarTestePorId(System.String)">
+            <summary>
+            Retorna um teste de acordo com seu id, mostrando seus dados completos, inclusive relatorio, usuario e transformador
+            </summary>
+            <param name="id">id hexadecimal</param>
+            <returns></returns>
+        </member>
+        <member name="M:Transformador.API.Controllers.TestController.CriarTeste(Transformador.Domain.Dtos.TestDto)">
+            <summary>
+            Cria um novo teste
+            </summary>
+            <param name="dto">dados do teste a ser criado</param>
+            <returns></returns>
+        </member>
+        <member name="M:Transformador.API.Controllers.TestController.AtualizarTest(System.String,Transformador.Domain.Dtos.TestDto)">
+            <summary>
+            Atualiza os dados do teste que está sendo passado conforme seu id
+            </summary>
+            <param name="id">id hexadecimal</param>
+            <param name="dto">dados atualizados</param>
+            <returns></returns>
+        </member>
+        <member name="M:Transformador.API.Controllers.TestController.DesativarTest(System.String)">
+            <summary>
+            Desativa o teste conforme seu id, desativa também os relatorios ligados a ele
+            </summary>
+            <param name="id">id hexadecimal</param>
+            <returns></returns>
+        </member>
+        <member name="M:Transformador.API.Controllers.TransformerController.BuscarTodos">
+            <summary>
+            Retorna todos os Transformadores cadastrados no banco de dados
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Transformador.API.Controllers.TransformerController.BuscarTransformadorAsync(System.String)">
+            <summary>
+            Retorna todas informações de um transformador, cujo o Id é informado
+            </summary>
+            <param name="id">id hexadecimal</param>
+            <returns></returns>
+        </member>
+        <member name="M:Transformador.API.Controllers.TransformerController.CriarTransformador(Transformador.Domain.Dtos.TransformerDto)">
+            <summary>
+            Cadastra um novo transformador no banco de dados
+            </summary>
+            <param name="dto">dados do transformador a ser cadastrado</param>
+            <returns></returns>
+        </member>
+        <member name="M:Transformador.API.Controllers.TransformerController.AtualizarTransformador(System.String,Transformador.Domain.Dtos.TransformerDto)">
+            <summary>
+            Atualiza as informações de um transformador, conforme o id informado
+            </summary>
+            <param name="id">id hexadecimal</param>
+            <param name="dto">dados atualizados</param>
+            <returns></returns>
+        </member>
+        <member name="M:Transformador.API.Controllers.UserController.BuscarTodos">
+            <summary>
+            Retorna todos usuários cadastrados no banco de dados
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Transformador.API.Controllers.UserController.BuscarUsuarioAsync(System.String)">
+            <summary>
+            Retorna informações completas do usuário cujo id foi informado
+            </summary>
+            <param name="id">id hexadecimal</param>
+            <returns></returns>
+        </member>
+        <member name="M:Transformador.API.Controllers.UserController.CriarUsuario(Transformador.Domain.Dtos.UserDto)">
+            <summary>
+            Adiciona um novo usuário no banco de dados
+            </summary>
+            <param name="dto">Dados do usuário a ser informado</param>
+            <returns></returns>
+        </member>
+        <member name="M:Transformador.API.Controllers.UserController.AtualizarUsuario(System.String,Transformador.Domain.Dtos.UserDto)">
+            <summary>
+            Atualiza os dados de um usuário já existente, com base no id e dados informados
+            </summary>
+            <param name="id">id hexadecimal</param>
+            <param name="dto">dados atualizados</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
