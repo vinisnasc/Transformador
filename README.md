@@ -10,7 +10,8 @@ Esta web API foi desenvolvida para o processo seletivo da empresa HVEX.
 - Swagger;  
 - Automapper;  
 - FluentValidation;  
-- Git.  
+- Git;  
+- Docker.  
 
 ## Detalhes
 Esta API é estruturada com base no padrão DDD com projetos do tipo biblioteca de classe, além do projeto do tipo API. Apesar de não estar totalmente conforme a Clean Architecture e o Domain Driven Design, buscou-se seguir seus princípios na medida do possível. Além disso, a API conta com um repositório genérico.  
@@ -69,6 +70,16 @@ GR4: É necessário a inativação de um relatório.
 Critérios de aceite: Deve haver a possibilidade de desativar um relatório.  
 
 ## Instruções de Utilização:
+
+### Docker:
+
+Caso tenha o Docker desktop instalado e em execução, execute os comandos:  
+```console
+$ docker-compose build  
+$ docker-compose up  
+```
+
+### Visual Studio
 
 Caso tenha o `git` instalado, é possível clonar este repositório com os seguintes comandos:
 
