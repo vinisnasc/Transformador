@@ -1,13 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using System.Reflection;
+using Transformador.API.Configurations;
 using Transformador.CrossCutting;
 using Transformador.CrossCutting.Mapper;
 using Transformador.Data.MongoConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
-
-
 builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDbSettings"));
 builder.Services.AddSingleton<IMongoDbSettings>(serviceProvider =>
     serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
@@ -21,21 +19,11 @@ builder.Services.AddAutoMapperConfiguration();
 builder.Services.RegisterServices();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.AddSwaggerGen(c =>
-{
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile) ; 
-    c.IncludeXmlComments(xmlPath);
-});
+builder.Services.AddSwaggerConfiguration();
 
 var app = builder.Build();
 
-/*if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
-{*/
-    app.UseSwagger();
-    app.UseSwaggerUI();
-
+app.UseSwaggerConfiguration(app.Environment);
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
